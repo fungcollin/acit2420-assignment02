@@ -1,0 +1,9 @@
+# These are the requirement packages
+tmux
+kakoune
+nginx
+neovim
+rsync
+vim
+python
+javascript

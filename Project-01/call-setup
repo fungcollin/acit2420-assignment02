@@ -1,0 +1,36 @@
+#!/bin/bash
+# File: call-setup
+# Memo: Calls on installation of packages and symbolic link scripts 
+
+if [[ $EUID -ne 0 ]]; then
+	echo "You need to correct privilgies to run the scripts."
+	exit 1
+fi
+
+while getopts ":r:u:h" opt; do
+	case "${opt}" in
+  	r)
+		file_path=${OPTARG}
+    		;;
+  	u)
+    		user=${OPTARG}
+		;;
+	:)
+		exit 1
+    		;;
+  	?)
+    		# Exit script for invalid option
+    		exit 1
+    		;;
+  	esac
+done
+
+echo Installing
+# Runs install script
+./install
+
+echo Linking
+# Runs link script
+./link
+
+# References:
