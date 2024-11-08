@@ -2,7 +2,10 @@
 # FILE: call-setup
 # NOTE: Calls on installation of packages and symbolic link scripts 
 
-# MAIN SCRIPT:  
+# START HERE WITH SETTING VARIABLES IF APPLICABLE:
+
+# MAIN SCRIPT:
+
 if [[ $EUID -ne 0 ]]; then # Checks for root privileges.
 	echo "You need to correct privileges to run the scripts." # Prompts message that you require correct privileges"
 	exit 1
@@ -21,6 +24,8 @@ while getopts ":p:" opt; do #
     		;;
   	esac
 done
+
+# RUN SCRIPTS:
 
 echo Installing # Informs user of running install script.
 ./install # Runs install script.

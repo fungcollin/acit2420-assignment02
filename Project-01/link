@@ -1,13 +1,36 @@
 #!/bin/bash
 # FILE: link
-# NOTE: Binary and symbolic link script
+# NOTE: This script checks if Git repository exist and performs binary and symbolic link scripting.
 
-# ERROR HANDLING:
+# START HERE WITH SETTING VARIABLES IF APPLICABLE:
 
+home_directory="$HOME"  # Path to the directory where you want to store the repository
 
 # MAIN SCRIPT:
 
+# GIT CLONING SCRIPT:
 
+if [ -d "$home_directory" ]; then # Checks if the directory exists. 
+    if [ -d "$home_directory/.git" ]; then # Checks if the .git directory exists. 
+    echo "Repository $home_directory is already a .git directory." 
+    else
+    echo "Repository already exists in $home_directory."
+    fi
+else
+    echo "Repository not found. Creating folder and cloning repository."
+    mkdir -p "$home_directory"  # Create the directory if it doesn't exist. 
+    git init
+    git clone "https://gitlab.com/cit2420/2420-as2-starting-files.git" "$homedirectory"  # Clones repository from provided link.
+fi
+
+# SYMBOLIC LINK SCRIPT:
+
+ln -s "$(pwd)$home_directory/bin" ~/bin # Creates a symbolic link to the execute script. 
+ln -s "$(pwd)$home_directory/config" /.config # Creates a symbolic link to the config script.
+ln -s "$(pwd)$home_directory/home" # Creates a symbolic link to the home script.
+ln -s "$(pwd)$home_directory/bashrc" ~/.bashrc # Creates a symbolic link to the bashrc script.
+ln -s "$(pwd)$home_directory/kakrc" ~/.config/kak/kakrc # Creates a symbolic link to the kakrc script.
+ln -s "$(pwd)$home_directory/tmux.conf" ~/.config/tmux/tmux.conf # Creates a symbolic link to the tmux.conf script.
 
 
 # REFERENCE:

@@ -2,9 +2,9 @@
 # FILE: installation
 # NOTE: This file is for the purpose of installing user-defined packages
 
-# START HERE:
+# START HERE WITH SETTING VARIABLES IF APPLICABLE:
 
-file_path=$1 #set packages filename
+file_path=$1 # Set packages filename
 
 # MAIN SCRIPT:
 
