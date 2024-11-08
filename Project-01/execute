@@ -1,0 +1,33 @@
+#!/bin/bash
+# FILE: call-setup
+# NOTE: Calls on installation of packages and symbolic link scripts 
+
+# MAIN SCRIPT:  
+if [[ $EUID -ne 0 ]]; then # Checks for root privileges.
+	echo "You need to correct privileges to run the scripts." # Prompts message that you require correct privileges"
+	exit 1
+fi
+
+while getopts ":p:" opt; do #
+	case "${opt}" in #
+  	p)
+		file_path=${OPTARG} # Packages is assigned OPTARG's value.
+    		;;
+  	:)
+		exit 1 # Exit script if OPTARGV is missing.
+    		;;
+	?)
+    		exit 1 # Exit script if an invalid input is entered.
+    		;;
+  	esac
+done
+
+echo Installing # Informs user of running install script.
+./install # Runs install script.
+
+echo Linking # Informs user of running link script.
+./link # Runs link script.
+
+# REFERENCES:
+# https://book.hacktricks.xyz/linux-hardening/privilege-escalation/euid-ruid-suid suggests to use EUID for root privileges.
+

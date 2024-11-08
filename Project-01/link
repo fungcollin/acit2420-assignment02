@@ -1,0 +1,14 @@
+#!/bin/bash
+# FILE: link
+# NOTE: Binary and symbolic link script
+
+# ERROR HANDLING:
+
+
+# MAIN SCRIPT:
+
+
+
+
+# REFERENCE:
+# https://ss64.com/bash/ln.html suggest -s option to make symbolic links

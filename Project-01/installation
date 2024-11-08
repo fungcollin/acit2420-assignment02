@@ -1,13 +1,20 @@
 #!/bin/bash
-# File: installation
-# This file is for the purpose of installing user-defined packages
-# Reference: https://wiki.archlinux.org/title/Pacman (--needed, --noconfirm)
+# FILE: installation
+# NOTE: This file is for the purpose of installing user-defined packages
 
-file_path=$1
+# START HERE:
 
-if [[ -f $file_path ]]; then
-	pacman -S --needed --noconfirm $(< "$file_path")
+file_path=$1 #set packages filename
+
+# MAIN SCRIPT:
+
+if [[ -f $file_path ]]; then # Checks if packages exist.
+	pacman -S --needed --noconfirm $(< "$file_path") # Install packages as needed without prompts. Reads each line in packages and substitutes "$file_path" place. 
 else
-	echo "The file '$file_path' does not exist."
-	exit 1
+	echo "The file '$file_path' does not exist." # Prompts an error message if designated file path does not exist. 
+	exit 1 # Exits the script. 
 fi
+
+# REFERENCE: 
+# https://wiki.archlinux.org/title/Pacman suggest the use of --needed to install packages as needed and --noconfirm to install without prompts
+# https://www.gnu.org/software/bash/manual/bash.html suggest the use of $(< to read the entire file and substitues its place.
