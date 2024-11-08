@@ -4,7 +4,7 @@
 
 # START HERE WITH SETTING VARIABLES IF APPLICABLE:
 
-file_path=$1 # Set packages filename
+file_path="$SUDO_HOME/Project-01/packages" # Set packages filename
 
 # MAIN SCRIPT:
 
@@ -18,3 +18,4 @@ fi
 # REFERENCE: 
 # https://wiki.archlinux.org/title/Pacman suggest the use of --needed to install packages as needed and --noconfirm to install without prompts
 # https://www.gnu.org/software/bash/manual/bash.html suggest the use of $(< to read the entire file and substitues its place.
+# https://linuxcommand.org/lc3_man_pages/sudo8.html suggest the use of $SUDO_HOME to access the home directory. 

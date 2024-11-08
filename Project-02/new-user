@@ -18,7 +18,7 @@ fi
 
 # MAIN SCRIPT: 
 
-while getopts
+while getopts "s:" opt
 	case "${opt}" in
 		s)
 			shell=$OPTARG
@@ -33,3 +33,5 @@ while getopts
 done
 
 # REFERENCES: 
+
+
