@@ -28,7 +28,7 @@ done
 # RUN SCRIPTS:
 
 echo Installing # Informs user of running install script.
-./install # Runs install script.
+./installation # Runs install script.
 
 echo Linking # Informs user of running link script.
 ./link # Runs link script.
