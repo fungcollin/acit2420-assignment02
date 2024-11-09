@@ -25,10 +25,10 @@ fi
 
 # SYMBOLIC LINK SCRIPT:
 
+# Create an array of directories to link in parallel.
 targets=( # Setting parallel array for targets.
     "$home_directory/bin"
     "$home_directory/config"
-    "$home_directory/home"
     "$home_directory/bashrc"
     "$home_directory/kakrc"
     "$home_directory/tmux.conf"
@@ -54,7 +54,7 @@ for i in "${!targets[@]}"; do # Loop for each target and destination.
     fi
 done
 
-# REFERENCE:
+# REFERENCES:
 # https://ss64.com/bash/syntax-file-operators.html suggest -d option to check if directory exists.
-# https://ss64.com/bash/ln.html suggest -s option to make symbolic links
-# https://ss64.com/bash/symlink.html suggest -L option to check if symbolic link exists
+# https://ss64.com/bash/ln.html suggest -s option to make symbolic links.
+# https://ss64.com/bash/symlink.html suggest -L option to check if symbolic link exists.
