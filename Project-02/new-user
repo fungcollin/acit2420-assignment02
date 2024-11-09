@@ -18,14 +18,26 @@ user_name=""
 shell="/bin/bash"
 groups=""
 password=""
+home_file="/home/$user_name"
+UID_RANGE_1_MIN=1000
+UID_RANGE_1_MAX=65533
+UID_RANGE_2_MIN=65535
+UID_RANGE_2_MAX=4294967294
 
 help() {
+	echo "How to use script: new-user -u <username> -s <shell> -g <groups> -p <password>"
+	echo "Available functions:"
+	echo "-u for Username"
+	echo "-s for Shell"
+	echo "-g for Groups"
+	echo "-p for Password"
+	exit 0
 
 }
 
 # MAIN SCRIPT:
 
-while getopts ":u:s:g:p:" opt; do
+while getopts ":u:s:g:p:" opt; do # Options for user_name, shell, groups, and password.
     case "${opt}" in
         u)
             user_name=${OPTARG}  # Assign username.
@@ -53,44 +65,25 @@ while getopts ":u:s:g:p:" opt; do
     esac
 done
 
-if [[ -z "$user_name" ]]; then
-    echo "Must enter a username."
-    exit 1
-fi
+uid() {
+while true; do
+        if [[ $((RANDOM % 2)) -eq 0 ]]; then
+            uid=$((RANDOM % (UID_RANGE_1_MAX - UID_RANGE_1_MIN + 1) + UID_RANGE_1_MIN))
+        else
+            uid=$((RANDOM % (UID_RANGE_2_MAX - UID_RANGE_2_MIN + 1) + UID_RANGE_2_MIN))
+        fi
+        if ! grep -q ":$uid:" /etc/passwd && ! grep -q ":$uid:" /etc/group; then
+            echo "$uid"
+            return
+        fi
+    done
+}
 
-if useradd -m -s "$shell" "$user_name"; then
-    echo "User '$user_name' created successfully."
-else
-    echo "Failed to create user '$user_name'."
-    exit 1
-fi
-
-if cp -r /etc/skel/. "/home/$user_name/"; then
-    echo "Successfully copied /etc/skel to /home/$user_name/."
-else
-    echo "Failed to copy /etc/skel."
-    exit 1
-fi
-
-if [[ -n "$password" ]]; then
-    if echo "$user_name:$password" | chpasswd; then
-        echo "Password set for '$user_name'."
-    else
-        echo "Failed to set password for '$user_name'."
-        exit 1
-    fi
-else
-    echo "Password not set. Please set it."
-fi
-
-echo "User '$user_name' has been created successfully."
-exit 0
-
-
+mkdir "$home_file"
+cp -r /etc/skel/. "$home_file"
+chown -r "$user_name:$uid" "$home_file"
+chmod -r 700 "$home_file"
 
 # REFERENCES:
-# https://ss64.com/bash/useradd.html suggest -m option to create home directory.
-# https://ss64.com/bash/groupadd.html suggest -g option to add group.
-# https://ss64.com/bash/usermod.html suggest -a option to add user to group.
-# https://ss64.com/bash/chpasswd.html suggest to use echo to set password.
-# https://ss64.com/bash/cp.html suggest -r option to copy directories.
+# https://www.tutorialspoint.com/guide-to-generate-random-numbers-in-linux suggest to use RANDOM to generate random numbers.
+# https://www.geeksforgeeks.org/random-shell-variable-in-linux-with-examples/ suggest to use RANDOM to generate random numbers.
