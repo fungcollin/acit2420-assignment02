@@ -2,13 +2,13 @@
 
 ## Introduction
 
-This repository contains two Bash scripts to prepare and admin a LINUX environment:
+This repository contains two Bash Project scripts to prepare and admin a LINUX environment:
 
 1. System Setup
 2. New User Creation 
 
-The first script's objective is to automate a system setup and sync.
-The second script's objective is to provide user management properties. 
+The first project's objective is to automate a system setup and sync.
+The second project's objective is to provide user management properties. 
 
 ---
 
@@ -16,19 +16,19 @@ The second script's objective is to provide user management properties.
 
 ---
 
-#### Script 1-1: **Installation** - Installing Packages
+#### Script 1-1: Installation - Installing Packages
 
 This script installs packages listed in ```bash /home/<user>/packages```
 
 ---
 
-##### Script 1-2: __Link__ - Creating Symbolic Links
+#### Script 1-2: Link - Creating Symbolic Links
 
 This script links configuration files from a designated Git repository to the system's configuration directory.
 
 ---
 
-#### Script 1-3: **Execute** - Setup Environment
+#### Script 1-3: Execute - Setup Environment
 
 This script embeds the execution of the prior two scripts to setup the environment. 
 
@@ -42,7 +42,7 @@ This script embeds the execution of the prior two scripts to setup the environme
 
 ### Project 2: New User Creation
 
-#### Script 2-1: **new-user** 
+#### Script 2-1: new-user
 
 This script allows:
 - User Creation
