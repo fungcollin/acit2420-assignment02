@@ -10,8 +10,8 @@ home_directory="$SUDO_HOME"  # Path to the directory where you want to store the
 
 # GIT CLONING SCRIPT:
 
-if [ -d "$home_directory" ]; then # Checks if the directory exists. 
-    if [ -d "$home_directory/.git" ]; then # Checks if the .git directory exists. 
+if [[ -d "$home_directory" ]]; then # Checks if the directory exists. 
+    if [[-d "$home_directory/.git" ]]; then # Checks if the .git directory exists. 
     echo "Repository $home_directory is already a .git directory." 
     else
     echo "Repository already exists in $home_directory."
@@ -46,7 +46,7 @@ for i in "${!targets[@]}"; do # Loop for each target and destination.
     target="${targets[$i]}" # Assign target variable.
     destination="${destinations[$i]}" # Assign destination variable.
 
-    if [ ! -L "$destination" ]; then # Check if symbolic link exists.
+    if [[ ! -L "$destination" ]]; then # Check if symbolic link exists.
         ln -s "$target" "$destination" # Create symbolic link. 
         echo "Symbolic link $destination created." 
     else
