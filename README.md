@@ -16,7 +16,7 @@ The second script's objective is to provide user management properties.
 
 #### Script 1: Installation - Installing Packages
 
-This script installs packages listed in ```bash /home/<user>/packages
+This script installs packages listed in ```bash /home/<user>/packages```
 
 ---
 
