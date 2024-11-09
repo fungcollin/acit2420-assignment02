@@ -64,10 +64,6 @@ This script allows:
 - Home Directory Creation
 - Group Addition
 
-```bash
-script here
-```
-
 > [!IMPORTANT]
 > A sample user creation script:
 > ```bash
