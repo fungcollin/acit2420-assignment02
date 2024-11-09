@@ -22,7 +22,7 @@ This script installs packages listed in ```bash /home/<user>/packages```
 
 ---
 
-##### Script 1-2: **Link** - Creating Symbolic Links
+##### Script 1-2: __Link__ - Creating Symbolic Links
 
 This script links configuration files from a designated Git repository to the system's configuration directory.
 
