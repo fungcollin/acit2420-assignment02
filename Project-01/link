@@ -54,6 +54,7 @@ for i in "${!targets[@]}"; do # Loop for each target and destination.
     fi
 done
 
+
 # REFERENCES:
 # https://ss64.com/bash/syntax-file-operators.html suggest -d option to check if directory exists.
 # https://ss64.com/bash/ln.html suggest -s option to make symbolic links.
