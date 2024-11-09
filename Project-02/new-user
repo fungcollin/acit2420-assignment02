@@ -19,10 +19,10 @@ shell="/bin/bash"
 groups=""
 password=""
 home_file="/home/$user_name"
-UID_RANGE_1_MIN=1000 # Sets minimum of first set of UID range. 
-UID_RANGE_1_MAX=65533 # Sets maximum of first set of UID range.
-UID_RANGE_2_MIN=65535 # Sets minimum of second set of UID range.
-UID_RANGE_2_MAX=4294967294 # Sets maximum of second set of UID range.
+UID__MIN1=1000 # Sets minimum of first set of UID range. 
+UID_MAX1=65533 # Sets maximum of first set of UID range.
+UID_MIN2=65535 # Sets minimum of second set of UID range.
+UID_MAX2=4294967294 # Sets maximum of second set of UID range.
 
 help() { # Help function to provide information on how to use the script.
 	echo "How to use script: new-user -u <username> -s <shell> -g <groups> -p <password>"
@@ -65,39 +65,52 @@ while getopts ":u:s:g:p:" opt; do # Options for user_name, shell, groups, and pa
     esac
 done
 
-if [ -z "$user_name" ]; then
+if [ -z "$user_name" ]; then # Checks if username is empty.
     echo "Username is required."
+	help
     exit 1
 fi
 
-random_uid() { # Function to loop through a sequence of random UID and checks if they are in /etc/passwd and /etc/group.
-while true; do
-        if [[ $((RANDOM % 2)) -eq 0 ]]; then
-            uid=$((RANDOM % (UID_RANGE_1_MAX - UID_RANGE_1_MIN + 1) + UID_RANGE_1_MIN)) # Generates random UID within first set of range..
-        else
-            uid=$((RANDOM % (UID_RANGE_2_MAX - UID_RANGE_2_MIN + 1) + UID_RANGE_2_MIN)) # Generates random UID within second set of range.
-        fi
-        if ! grep -q ":$uid:" /etc/passwd && ! grep -q ":$uid:" /etc/group; then # Checks if UID is not in /etc/passwd and /etc/group.
-            echo "$uid"
+get_uid() {
+    # Start with the first range and iterate sequentially
+    for uid in $(seq $UID_MIN1 $UID_MAX1) $(seq $UID_MIN2 $UID_MAX2); do # Start with the first range and iterate sequentially
+        if ! cut -d : -f3 /etc/passwd | grep -qx "$uid"; then # cut -d : -f3 takes the third field of /etc/passwd and checks for matches/uid in use using grep -qx and proceeds only if there is no match.
+            echo "$uid valid."
             return
         fi
     done
+    echo "No valid UID."
+    exit 1
 }
 
-UID=$(random_uid)
-mkdir "$home_file"
-cp -r /etc/skel/. "$home_file"
-chown -r "$user_name:$uid" "$home_file"
-chmod -r 700 "$home_file"
+get_gid() {
+    # Start with the first range and iterate sequentially
+    for gid in $(seq $UID_MIN1 $UID_MAX1) $(seq $UID_MIN2 $UID_MAX2); do # Start with the first range and iterate sequentially
+        if ! cut -d : -f3 /etc/group | grep -qx "$gid"; then # cut -d : -f3 takes the third field of /etc/group and checks for matches/gid using grep -qx and proceeds only if there is no match.
+            echo "$gid valid."
+            return
+        fi
+    done
+    echo "No valid GID."
+    exit 1
+}
 
-if [ -n "$groups" ]; then
-    for group in $(echo "$groups" | tr "," "\n"); do
-        # Check if the group exists, if not, create it manually
-        if ! grep -q "^$group:" /etc/group; then
-	fi
-	done
-fi
+UID=$(get_uid)
+GID=$(get_gid)
+
+mkdir -p "$home_file" # Creates a home directory and clones /etc/skel.
+cp -r /etc/skel/. "$home_file" # Creates a home directory and clones /etc/skel.
+
+chown "$user_name:$uid" "$home_file" # Changes ownership.
+chmod 700 "$home_file" # Changes user permission.
+
+if [[ -n "$groups" ]]; then
+    for group in $groups; do
+
+passwd $username # Prompts user to enter a password.
 
 # REFERENCES:
 # https://www.tutorialspoint.com/guide-to-generate-random-numbers-in-linux suggest to use RANDOM to generate random numbers.
 # https://www.geeksforgeeks.org/random-shell-variable-in-linux-with-examples/ suggest to use RANDOM to generate random numbers.
+# https://unix.stackexchange.com/questions/397236/sed-to-change-userid-in-etc-passwd-to-zero suggest to use sed to change UID in /etc/passwd.
+# https://www.baeldung.com/linux/username-user-id suggest to use /etc/passwd to check for UID.
