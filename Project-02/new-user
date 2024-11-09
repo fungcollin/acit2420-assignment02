@@ -98,6 +98,11 @@ get_gid() {
 UID=$(get_uid)
 GID=$(get_gid)
 
+
+echo "$user_name:x:$GID:" >> /etc/group # Appends username to /etc/group.
+echo "$user_name:x:$UID:$GID:$home_file:$shell" >> /etc/passwd # Appends username to /etc/passwd.
+echo "$username:!!:::::::" >> /etc/shadow # Appends username to /etc/shadow. and !! indicates there is no active password
+
 mkdir -p "$home_file" # Creates a home directory and clones /etc/skel.
 cp -r /etc/skel/. "$home_file" # Creates a home directory and clones /etc/skel.
 
@@ -114,3 +119,4 @@ passwd $username # Prompts user to enter a password.
 # https://www.geeksforgeeks.org/random-shell-variable-in-linux-with-examples/ suggest to use RANDOM to generate random numbers.
 # https://unix.stackexchange.com/questions/397236/sed-to-change-userid-in-etc-passwd-to-zero suggest to use sed to change UID in /etc/passwd.
 # https://www.baeldung.com/linux/username-user-id suggest to use /etc/passwd to check for UID.
+# https://www.man7.org/linux/man-pages/man5/group.5.html suggest to use /etc/group to check for GID. 

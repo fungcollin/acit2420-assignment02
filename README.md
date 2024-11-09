@@ -12,6 +12,17 @@ The second project's objective is to provide user management properties.
 
 ---
 
+## Table of Contents
+
+- [Project 1 - System Setup](#project-1-system-setup)
+    - [Installing Packages](#script-1-1-installation---installing-packages)
+    - [Creating Symbolic Links](#script-1-2-link---creating-symbolic-links)
+    - [Setup Environment](#script-1-3-execute---setup-environment)
+- [Project 2 - New User Creation](#project-2-new-user-creation)
+    - [New-User Script](#script-2-1-new-user)
+
+---
+
 ### Project 1: System Setup
 
 ---
@@ -19,6 +30,9 @@ The second project's objective is to provide user management properties.
 #### Script 1-1: Installation - Installing Packages
 
 This script installs packages listed in ```bash /home/<user>/packages```
+
+> [!NOTE]
+> You can add additional required packages in the packages file
 
 ---
 
@@ -54,6 +68,15 @@ This script allows:
 script here
 ```
 
-> [!CAUTION] 
-> DO NOT ATTEMPT THIS.
+> [!IMPORTANT]
+> A sample user creation script:
+> ```bash
+> sudo ./new-user -u Collin -s /bin/test -g "ACIT 2420"
 
+Thank you for viewing this tutorial on setting up an environment and maintaining user management!
+
+---
+
+# References
+> [!IMPORTANT]
+> References are avaliable within each script to cross reference the usage. 
