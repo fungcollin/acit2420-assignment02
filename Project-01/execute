@@ -1,5 +1,5 @@
 #!/bin/bash
-# FILE: call-setup
+# FILE: execute
 # NOTE: Calls on installation of packages and symbolic link scripts 
 
 # START HERE WITH SETTING VARIABLES IF APPLICABLE:
@@ -17,20 +17,22 @@ while getopts ":p:" opt; do #
 		file_path=${OPTARG} # Packages is assigned OPTARG's value.
     		;;
   	:)
+		echo "Cannot have no input."
 		exit 1 # Exit script if OPTARGV is missing.
     		;;
 	?)
-    		exit 1 # Exit script if an invalid input is entered.
+		echo "Invalid input."
+    	exit 1 # Exit script if an invalid input is entered.
     		;;
   	esac
 done
 
 # RUN SCRIPTS:
 
-echo Installing # Informs user of running install script.
+echo "Installing Packages." # Informs user of running install script.
 ./installation # Runs install script.
 
-echo Linking # Informs user of running link script.
+echo "Linking configuration files." # Informs user of running link script.
 ./link # Runs link script.
 
 # REFERENCES:

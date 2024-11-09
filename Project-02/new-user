@@ -7,30 +7,13 @@
 # - Addition of groups
 # - Setup password
 
-# START HERE:
-
-# ERROR HANDLING:
+# MAIN SCRIPT:
 
 if [[ $EUID -ne 0 ]]; then # Checks for root privileges
 	echo "You need the correct privileges to run this script." # Prompts message that you require correct privileges.
 	exit 1 # Exit the script.
 fi
 
-# MAIN SCRIPT: 
-
-while getopts "s:" opt
-	case "${opt}" in
-		s)
-			shell=$OPTARG
-				;;
-		:)
-			exit 1
-				;;
-		?)
-			exit 1
-				;;
-	esac
-done
 
 # REFERENCES: 
 
